@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/x-icon" href="../assets/Logo1.jpeg" />
+  <link rel="stylesheet" href="../css/styleFormsLogin.css" />
+  <script src="../js/sweetAlert.js"></script>
+  <title>Login</title>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm" action="../back/login.php" method="POST">
+      <div class="form-group">
+        <label for="nombreUsuario">Nombre de usuario</label>
+        <input name="nombreUsuario" id="nombreUsuario" required />
+        <p id="errorNombreUsuario"></p>
+
+        <label for="password" style="margin-top: 15px;">Contraseña</label>
+        <input type="password" name="password" id="password" required />
+        <p id="errorPassword"></p>
+      </div>
+      <button type="submit" class="btn">Entrar</button>
+    </form>
+    <div class="links">
+      <a href="./recuPassword.html">¿Olvidaste tu contraseña?</a><br>
+      <a href="./registro.html">Registrarse</a>
+      <p id="aviso"></p>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

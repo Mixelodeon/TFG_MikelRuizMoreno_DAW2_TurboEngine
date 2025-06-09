@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* background-image: url(../assets/img/misImagenes/C2vtr.png); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 65%;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: #fff;
+  padding: 25px 15px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0f0f0;
+}
+
+.login-container h2 {
+  text-align: center;
+  color: orange;
+  font-size: 1.8rem;
+  margin-bottom: 35px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 550;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  color: #000;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.btn {
+  background-color: orange;
+  color: white;
+  padding: 12px 0;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #ce6700;
+}
+
+.links {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.links a {
+  color: orange;
+  text-decoration: none;
+  font-size: 0.95em;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}

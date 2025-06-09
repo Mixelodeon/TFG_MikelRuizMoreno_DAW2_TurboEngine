@@ -1,0 +1,29 @@
+/* Cabecera de la página web */
+header.masthead {
+    background-image: none;
+    background-image: url("../assets/img/misImagenes/c2.png");
+    background-position: center 70%;
+    background-size: cover;
+    height: 350px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* #mainNav {
+    background-color: #212529;
+    color: white;
+} */
+
+footer{
+    background-color: #212529;
+    color: white;
+}
+
+/* Apartado de Citas */
+select option:hover {
+    background-color: #ffc800;
+    color: white;
+}

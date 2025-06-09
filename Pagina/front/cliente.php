@@ -1,0 +1,659 @@
+<?php
+    session_start();
+
+    $user = "root";
+    $pass = "";
+    $host = "localhost";
+    $dbname = "turboengine";
+
+    $conexion = mysqli_connect($host, $user, $pass, $dbname);
+
+    // Verificar si la conexión es exitosa antes de cerrarla
+    if (!$conexion) {
+        mysqli_close($conexion);
+    }
+
+    if (!isset($_SESSION['id_usuario']) || $_SESSION['id_rol'] != 2) {
+        header("Location: ../front/login.html?error=No tienes permiso para acceder");
+        exit();
+    }
+    // Crear variables de sesión
+    $idUsuario= $_SESSION["id_usuario"];
+    $idrol = $_SESSION['id_rol'];
+    $nombreUsuario = $_SESSION['nombre_usuario'];
+    $dni = $_SESSION['dni'];
+    $contraseña = $_SESSION['contraseña'];
+    $correo = $_SESSION['correo'];  
+    $telefono = $_SESSION['telefono'];
+    $nombre = $_SESSION['nombre'];
+    $apellidos = $_SESSION['apellidos'];
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="Mikel Ruiz" />
+        <title>Taller TurboEngine</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="../assets/Logo1.jpeg" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../css/styles.css" rel="stylesheet" />
+        <!-- Mi archivo CSS -->
+        <link href="../css/miStylePresentacion.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top"><img src="../assets/img/misImagenes/titulo-Photoroom.png" alt="Imagen titulo error." /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#about">Sobre Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#preguntasfrecuentes">Preguntas Frecuentes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./citas.php">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./presupuestos.php">Presupuestos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./perfil.php">Perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../back/logout.php">Salir</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-subheading">¡Bienvenido al taller TurboEngine <?php echo$_SESSION['nombre']; ?>!</div>
+                <div class="masthead-heading text-uppercase">Tu taller de confianza</div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="#servicios">Consultar Servicios</a>
+            </div>
+        </header>
+        <!-- Services-->
+        <section class="page-section" id="online">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Servicios Online</h2>
+                    <h3 class="section-subheading text-muted">Aprovecha al máximo nuestra web.</h3>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Servicios De Reparación</h4>
+                        <p class="text-muted">En TurboEngine dejará su coche en manos de los mejores mecánicos, donde tratarán su coche con cuidado.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Citas Online</h4>
+                        <p class="text-muted">Pide cita de manera online desde nuestra página web, de manera rápida y sencilla, ahorrando así el viaje al taller.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Presupuestos Online</h4>
+                        <p class="text-muted">Solicita diferentes presupuestos de nuestros servicios en el taller de manera rápida y sencilla desde nuestra web.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-light" id="servicios">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Servicios</h2>
+                    <h3 class="section-subheading text-muted">Consulta los diferentes servicios que ofrecemos en TurboEngine.</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="../assets/img/portfolio/neumaticosCambio.jpg" alt="Imagen cambio de neumaticos:" />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Cambio de neumáticos</div>
+                                <div class="portfolio-caption-subheading text-muted">Servicio simple</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 2-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="../assets/img/portfolio/cambioAceite.jpg" alt="Imagen cambio de aceite:" />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Cambio de aceite</div>
+                                <div class="portfolio-caption-subheading text-muted">Servicio simple</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 3-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="../assets/img/portfolio/cambioFrenos.jpg" alt="Imagen cambio de frenos:" />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Cambio de Freno</div>
+                                <div class="portfolio-caption-subheading text-muted">Servicio simple</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                        <!-- Portfolio item 4-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="../assets/img/portfolio/kitDistribucion.jpg" alt="Imagen cambio de distribución:" />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Kit de distribución</div>
+                                <div class="portfolio-caption-subheading text-muted">Servicio complejo</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+                        <!-- Portfolio item 5-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="../assets/img/portfolio/cambioEmbrague.jpg" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Cambio de embrague</div>
+                                <div class="portfolio-caption-subheading text-muted">Servicio complejo</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <!-- Portfolio item 6-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="../assets/img/portfolio/preITV.jpg" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Pre-ITV</div>
+                                <div class="portfolio-caption-subheading text-muted">Servicio Simple</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About-->
+        <section class="page-section" id="about">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Sobre Nosotros</h2>
+                    <h3 class="section-subheading text-muted">Conocenos mejor.</h3>
+                </div>
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="../assets/img/about/servicios.jpg" /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="subheading">¿Quienes somos?</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">
+                                    Somos un taller de Castro Urdiales que tiene como objetivo facilitar a nuestros clientes la solicitud de citas o presupuestos a través de nuestra página web. Ofreciendo además un
+                                    servicio de reparaciones rápido, para que el cliente no se quede sin su vehiculo personal.
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="../assets/img/about/taller.jpg" alt="..." /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="subheading">¿Que ofrecemos?</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">
+                                    Facilitamos a nuestros clientes el pedir una cita o un presupuesto de reparación para su vehículo a través de nuestra página web.
+                                    De esta manera, nuestros clientes no tienen que acudir al taller ni realizar una llamada telefónica para solicitar una cita o presupuesto.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="../assets/img/about/pagina.jpg" alt="..." /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="subheading">Contenido de la página:</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">
+                                    Desde nuestra web se pueden consultar diferentes servicios comunes como puede ser el cambio de aceite, neumáticos, servicios pre-ITV, etc... 
+                                    Consultando un precio orientativo del servicio específico.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <h4>
+                                Confía
+                                <br />
+                                en 
+                                <br />
+                                nosotros !
+                            </h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- Clients-->
+        <!-- <div class="py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-3 col-sm-6 my-3">
+                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/microsoft.svg" alt="..." aria-label="Microsoft Logo" /></a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 my-3">
+                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/google.svg" alt="..." aria-label="Google Logo" /></a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 my-3">
+                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/facebook.svg" alt="..." aria-label="Facebook Logo" /></a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 my-3">
+                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/ibm.svg" alt="..." aria-label="IBM Logo" /></a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+                <!-- Portfolio Grid Preguntas frecuentes-->
+                <section class="page-section bg-light" id="preguntasfrecuentes">
+                    <div class="container">
+                        <div class="text-center">
+                            <h2 class="section-heading text-uppercase">Preguntas frecuentes</h2>
+                            <h3 class="section-subheading text-muted">Estas son las preguntas más frecuentes de nuestros clientes.</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-6 mb-4">
+                                <!-- Portfolio item 1-->
+                                <div class="portfolio-item">
+                                    <div class="portfolio-caption">
+                                        <div class="portfolio-caption-heading">
+                                            <ul>
+                                                <li><a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal10">¿Como usar la página web?</a></li>
+                                                <li><a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal7">¿Cada cuanto debe realizar una revisión a mi vehículo?</a></li>
+                                                <li><a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal8">¿Cada cuanto se deben cambiar los neumáticos de mi vehículo?</a></li>
+                                                <li><a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal9">¿Con cuántos KM debo cambiar los neumáticos de mi vehículo?</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>       
+                </section>
+        <!-- Footer-->
+        <footer class="footer py-4" id="footer">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start">Copyright &copy; TurboEngine 2025</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-light btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-light btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-light btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a class="link-light text-decoration-none me-3" href="#!">Polítca de privacidad</a>
+                        <a class="link-light text-decoration-none" href="#!">Condiciones de uso</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+        <!-- Portfolio Modals-->
+        <!-- Portfolio item 1 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Icono de cierre -->
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Cambio de neumaticos</h2>
+                                    <p class="item-intro text-muted">Servicio simple.</p>
+                                    <img class="img-fluid d-block mx-auto" src="../assets/img/portfolio/neumaticosCambio.jpg" width="60%" height="60%" />
+                                    <p>
+                                        El precio del cambio de neumaticos puede rondar entre los 350€ hasta los 1500€, esta variación de precios dependerá de las medidas y tipo 
+                                        de neumatico que equipe el vehiculo.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 2 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Cambio de aceite</h2>
+                                    <p class="item-intro text-muted">Servicio simple.</p>
+                                    <img class="img-fluid d-block mx-auto" src="../assets/img/portfolio/cambioAceite.jpg" width="60%" height="60%" />
+                                    <p>
+                                        El precio del cambio de aceite variará dependiendo del vehiculo y tipo de aceite requerido, este puede rondar entre los 100€ y 200€. Incluyendo el cambio de aceite y cambio
+                                        del filtro de aceite.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 3 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Cambio de frenos</h2>
+                                    <p class="item-intro text-muted">Servicio simple.</p>
+                                    <img class="img-fluid d-block mx-auto" src="../assets/img/portfolio/cambioFrenos.jpg" width="60%" height="60%" />
+                                    <p>
+                                        Este servicio se divide en dos servicios, ya que el cliente puede solicitar un simple cambio de pastillas de freno y líquido de frenos, servicio
+                                        que ronda entre los 200€ y 500€. Este precio es simplemente orientativo, ya que dependerá de las pastillas necesárias en cada vehículo. 
+                                        También se puede solicitar el cambio de pastillas, discos y líquido de frenos, esto aumenta el precio y variará dependiendo del vehículo, 
+                                        con un rango de entre 300€ y 700€.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 4 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Kit de distribución</h2>
+                                    <p class="item-intro text-muted">Servicio complejo.</p>
+                                    <img class="img-fluid d-block mx-auto" src="../assets/img/portfolio/kitDistribucion.jpg" width="60%" height="60%" />
+                                    <p>
+                                        Este suele ser un servicio el cual requiere de varias horas (entre 6 y 8 horas) dependiendo de la motorización del vehículo. El precio
+                                        variará dependiendo de las horas invertidas por el mecánico en el servicio, el rango orientativo es de 500€ hasta 800€. Si la correa de 
+                                        a sido dañada y a causado daños en el motor deberá ponerse en contacto con el taller pará solicitar un presupuesto.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 5 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Cambio de embrague</h2>
+                                    <p class="item-intro text-muted">Servicio complejo.</p>
+                                    <img class="img-fluid d-block mx-auto" src="../assets/img/portfolio/cambioEmbrague.jpg" width="60%" height="60%" />
+                                    <p>
+                                        El cambio de embrague puede tener un coste entre 500€ y 1500€, todo dependiendo del modelo de vehiculo y el tipo
+                                        de embrague del mismo.También dependerá del tiempo de mano de obra aplicado por el mecánico.
+                                    </p>
+                                  
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 6 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Revisión Pre-ITV</h2>
+                                    <p class="item-intro text-muted">Servicio simple.</p>
+                                    <img class="img-fluid d-block mx-auto" src="../assets/img/portfolio/preITV.jpg" width="60%" height="60%" />
+                                    <p>
+                                        Se realizará una revisión completa del estado del vehiculo y se le realizarán los mantenimientos básicos en caso de ser necesario. Este servicio se estima un tiempo entre
+                                        1 o 2 horas dependiendo del vehículo. El precio del servicio se estima entre los 100€ y 250€.
+                                        En caso de encontrar algun defecto grave que requiera de más horas de trabajo o aumento del precio, nos pondremos en contacto con el cliente
+                                        para realizar o no el servicio.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+        <!-- Modal de preguntas frecuentes -->
+         <!-- Portfolio item 7 modal popup-->
+         <div class="portfolio-modal modal fade" id="portfolioModal7" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">¿Cada cuanto debo realizar la revisión de mi vehículo?</h2>
+                                    <p>
+                                        El vehículo suele indicar el kilometraje en el cual se debe realizar la revisión, pero si el vehiculo no lo indica, se recomienda realizarla cada año o cada 15.000km.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portfolio-modal modal fade" id="portfolioModal8" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">¿Cada cuanto debo realizar un cambio de aceite?</h2>
+                                    <p>
+                                        Los cambios de aceite se deben realizar cada 15.000km o cada año, dependiendo de lo que ocurra primero.
+                                        En caso de que el vehiculo realice trayectos cortos, se recomienda realizar el cambio de aceite cada 10.000km o cada 6 meses.
+                                        Todo esto dependerá del vehiculo y del tipo de aceite que utilice.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-modal modal fade" id="portfolioModal9" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">¿Cada cuantos km debo realizar el cambio de neumáticos?</h2>
+                                    <p>
+                                        Todo dependerá del tipo de neumático que equipe el vehiculo, pero se recomienda realizar el cambio de neumáticos cada 40.000km o cada 5 años.
+                                        En caso de que el vehiculo realice trayectos cortos, se recomienda realizar el cambio de neumáticos cada 30.000km o cada 3 años.
+                                        Todo esto dependerá del tipo de conducción y del tipo de neumático que equipe el vehiculo.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <div class="portfolio-modal modal fade" id="portfolioModal10" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="../assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">¿Como usar la página web?</h2>
+                                    <p>
+                                        Ahora se encuentra en la página principal, donde podrá conocer el teller y lo servicios que prestamos,
+                                        si desea pedir una cita o presupuesto, deberá de dirigirse al apartado de "Iniciar sesión". Si no dispone
+                                        de una cuenta, no se preocupe, encontrará un apartado de "Registrarse", justo debajo del formulario de inicio
+                                        de sesión. 
+                                        <br>
+                                        Una vez se haya identificado, podrá dirigirse al apartado de presupuestos, donde encontrará un formulario que
+                                        deberá de rellenar y esperar a que un administrador analice su solicitud y le envie su presupuesto.
+                                        <br>
+                                        Para solicitar una cita, simplemente dirigase al apartado de "Citas", y se le mostrarán las diferentes citas disponibles.
+                                        Seleccione la cita que más le convenga y confirme su cita.
+                                        <br>
+                                        Si desea modificar su perfil, consultar sus citas o presupuestos, simplemente diríjase al apartado de "Perfil" y podrá modificar su perfil, 
+                                        consultar sus citas y presupuestos.
+                                    </p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Volver
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
+    </body>
+</html>
+
+<?php 
+    // Cerrar conexión
+    session_abort()
+?>

@@ -1,0 +1,18 @@
+/* Cabecera de la página web */
+header.masthead {
+    /* Quitar el fondo por defecto */
+    background-image: none;
+    background-image: url("../assets/img/misImagenes/c2.png");
+    background-position: center 70%;
+    
+}
+footer{
+    background-color: #212529;
+    color: white;
+}
+
+/* Apartado de Citas */
+select option:hover {
+    background-color: #ffc800;
+    color: white;
+}
