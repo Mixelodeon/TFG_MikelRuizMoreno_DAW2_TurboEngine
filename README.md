@@ -1,5 +1,5 @@
 Manual de uso de la página web:
-1. Se debe pegar el proyecto (La carpeta: Página) en la carpeta htdocs de Xamp.
+1. Se debe pegar el proyecto (La carpeta: Pagina) en la carpeta htdocs de Xamp.
 2. Se deben de sustituir algunos de los archivos de configuración, para de esta manera permitir el envio de correos:
 	- En la carpeta del proyecto, se encuentra una carpeta llamada "ArchivosDeConfiguraciónXampp", en ella hay dos archivos de configuración.
 	- Se debe de sustituir el archivo de php.ini de esta carpeta, por el archivo de configuración de xampp situado en
